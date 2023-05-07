@@ -51,7 +51,7 @@ require_once '../helper.php';
 </head>
 
 <body>
-<header>
+    <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/BOBA">BOBA</a>
@@ -72,6 +72,8 @@ require_once '../helper.php';
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/BOBA/csrf">Form</a></li>
                                 <li><a class="dropdown-item" href="/BOBA/csrf/login.php">Login Form</a></li>
+                                <li><a class="dropdown-item" href="/BOBA/csrf/commentlist.php">Comment List Form</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item active">
@@ -82,7 +84,7 @@ require_once '../helper.php';
             </div>
         </nav>
     </header>
-    <div class="container w-25 pb-3">
+    <div class="container w-50 pb-3">
         <h1 class="text-center">Demo Form</h1>
         <div class="row justify-content-center mt-5">
             <div class="bd-example col-lg-6" style="margin:auto">

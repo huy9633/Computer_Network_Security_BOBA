@@ -51,6 +51,8 @@ require_once '../helper.php';
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/BOBA/csrf">Form</a></li>
                                 <li><a class="dropdown-item" href="/BOBA/csrf/login.php">Login Form</a></li>
+                                <li><a class="dropdown-item" href="/BOBA/csrf/commentlist.php">Comment List Form</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item active">
