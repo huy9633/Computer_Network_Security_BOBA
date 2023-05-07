@@ -14,6 +14,8 @@ require_once '../helper.php';
     <title>CSRF Demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         .bd-example {
             padding: 1.5rem;
@@ -41,8 +43,15 @@ require_once '../helper.php';
                         <li class="nav-item active">
                             <a class="nav-link  " href="<?= base_url() ?>">Home</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link active " href="/BOBA/csrf">CSRF</a>
+                        <li class="nav-item dropdown  ">
+                            <a class="nav-link dropdown-toggle active" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown">
+                                CSRF
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/BOBA/csrf">Form</a></li>
+                                <li><a class="dropdown-item" href="/BOBA/csrf/login.php">Login Form</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item active">
                             <a class="nav-link " href="/BOBA/xss">XSS</a>
@@ -53,7 +62,7 @@ require_once '../helper.php';
         </nav>
     </header>
     <div class="container w-25 pb-3">
-        <h1 style="text-align: center">Demo Form</h1>
+        <h1 class="text-center">Demo Form</h1>
         <?php if (has_flash_message('msg')): ?>
             <div class="alert alert-success" role="alert">
                 <?= flash_message('msg') ?>
