@@ -10,7 +10,7 @@ require_once '../helper.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSRF Demo</title>
+    <title>CSRF Comment List Demo</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -50,8 +50,8 @@ require_once '../helper.php';
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/BOBA/csrf">Form</a></li>
                                 <li><a class="dropdown-item" href="/BOBA/csrf/login.php">Login Form</a></li>
-                                <li><a class="dropdown-item" href="/BOBA/csrf/commentlist.php">Comment List Form</a>
-                                </li>
+                                <li><a class="dropdown-item" href="/BOBA/csrf/commentlist.php">Comment List Form</a></li>
+                                <li><a class="dropdown-item" href="/BOBA/csrf/page.php">Auto Submit Form</a></li>
                             </ul>
                         </li>
                         <li class="nav-item active">
@@ -129,15 +129,13 @@ require_once '../helper.php';
 
                 <button type="submit" class="btn btn-primary">Gửi bình luận</button>
             </form>
-            <?php 
+            <?php
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $name = $_POST['name'];
                 $comment = $_POST['comment'];
 
                 if (!empty($name) && !empty($comment)) {
                     $commentData = array(
-                        'name' => $name,
                         'comment' => $comment
                     );
 

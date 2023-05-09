@@ -1,39 +1,20 @@
 <?php
+
 require_once '../helper.php';
-$username = "";
-$password = "";
-$error = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = test_input($_POST["username"]);
-    $password = test_input($_POST["password"]);
-    if ($username == "admin" && $password == "12345") {
-        // Đăng nhập thành công, chuyển hướng sang trang khác
-        header("Location: index.php");
-        exit();
-    } else {
-        $error = "Tên đăng nhập hoặc mật khẩu không đúng!";
-    }
-}
-function test_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSRF Login Demo</title>
+    <title>DEMO CSRF - Auto Submit Form on Page Load</title>
+    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
         .bd-example {
             padding: 1.5rem;
@@ -43,10 +24,6 @@ function test_input($data)
             border-top-left-radius: 0.25rem;
             border-top-right-radius: 0.25rem;
             border-style: solid;
-        }
-
-        .text-theme {
-            color: #5369f8 !important;
         }
     </style>
 </head>
@@ -86,37 +63,77 @@ function test_input($data)
             </div>
         </nav>
     </header>
-    <div class="container w-50 pb-3">
-        <h1 class="text-center">Demo Form</h1>
-        <div class="row justify-content-center mt-5">
-            <div class="bd-example col-lg-6" style="margin:auto">
-                <h3 class="text-center mb-3 h4 font-weight-bold text-theme">Đăng nhập</h3>
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    <div class="container mt-5">
+        <h1 class="mb-4">Danh sách bình luận</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Người dùng 1</h5>
+                        <p class="card-text">Bình luận của người dùng 1</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Người dùng 2</h5>
+                        <p class="card-text">Bình luận của người dùng 2</p>
+                    </div>
+                </div>
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Người dùng 3</h5>
+                        <p class="card-text">Bình luận của người dùng 3</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 bd-example ">
+                <h4>Thêm bình luận mới</h4>
+                <form class="form-autosubmit" action="submit.php" method="post" id="auto-submit-form">
                     <div class="mb-3">
-                        <label for="username" class="form-label">Tên đăng nhập</label>
-                        <input type="text" class="form-control" id="username" name="username"
-                            value="<?php echo $username; ?>" required>
+                        <label for="comment" class="form-label">Bình luận</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
                     </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
-                    </div>
-                    <div class="d-grid gap-2 col-9 mx-auto">
-                        <button type="submit" class="btn btn-primary ">Đăng nhập</button>
-                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi</button>
                 </form>
-                <?php if ($error != "") { ?>
-                    <div class="alert alert-danger mt-3">
-                        <?php echo $error; ?>
-                    </div>
-                <?php } ?>
             </div>
         </div>
     </div>
-    <footer class="border-top footer text-muted">
-        <p class="text-center text-muted">&copy; 2023 - BOBA</p>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/js/bootstrap.min.js"></script>
+    <script>
+        // Tự động submit form khi trang vừa load
+        document.addEventListener('DOMContentLoaded', function () {
+            setTimeout(() => { document.querySelector('.form-autosubmit').submit(); }, 3000);
 
-    </footer>
+        });
+        function removeFavicon() {
+            var myHead = document.getElementsByTagName("head")[0];
+            var lnks = myHead.getElementsByTagName('link');
+            var len = lnks.length;
+            for (var i = 0; i < len; ++i) {
+
+                var l = lnks[i];
+                if (l.type == "image/x-icon" || l.rel == "shortcut icon") {
+                    myHead.removeChild(l);
+                    return; // Returned assuming only one favicon link tag
+                }
+
+            }
+        }
+
+
+        function changeFavicon() {
+            var link = document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'shortcut icon';
+            link.href = 'http://uploads.neatorama.com/vosa/theme/neatobambino/media/loading.gif';
+            removeFavicon(); // remove existing favicon
+            document.getElementsByTagName('head')[0].appendChild(link);
+
+        }
+
+        changeFavicon();
+    </script>
 </body>
 
 </html>
