@@ -94,8 +94,7 @@ if (empty($_SESSION['contents'])) {
         <ul class="list-group">
             <?php foreach ($_SESSION['contents'] as $content): ?>
                 <li class="list-group-item">
-                    <?= $content ?>
-                    <!-- <?= XSSParser::get($content) ?> -->
+                    <?= XSSParser::get($content) ?>
                 </li>
             <?php endforeach ?>
         </ul>

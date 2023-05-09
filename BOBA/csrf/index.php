@@ -66,12 +66,12 @@ require_once '../helper.php';
     </header>
     <div class="container w-25 pb-3">
         <h1 class="text-center">Demo Form</h1>
-        <?php if (has_flash_message('msg')): ?>
+        <?php if (has_flash_message('msg')) : ?>
             <div class="alert alert-success" role="alert">
                 <?= flash_message('msg') ?>
             </div>
         <?php endif ?>
-        <?php if (has_flash_message('error')): ?>
+        <?php if (has_flash_message('error')) : ?>
             <div class="alert alert-danger" role="alert">
                 <?= flash_message('error') ?>
             </div>
@@ -89,7 +89,6 @@ require_once '../helper.php';
     </div>
     <footer class="border-top footer text-muted">
         <p class="text-center text-muted">&copy; 2023 - BOBA</p>
-
     </footer>
 </body>
 
