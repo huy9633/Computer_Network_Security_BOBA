@@ -1,6 +1,9 @@
 <?php
 require_once '../helper.php';
 //include_once 'dbConnection.php';
+if(isset($_SESSION['username'])){
+    header("location: index.php");
+}
 function test_input($data)
 {
     $data = trim($data);
@@ -8,9 +11,6 @@ function test_input($data)
     $data = addslashes($data);
 //    $data = htmlspecialchars($data);
     return $data;
-}
-if(isset($_SESSiON['username'])){
-    header("location: index.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = test_input($_POST['username']);
@@ -21,10 +21,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($username == "thinh" || $username == "huy"|| $username == "my" || $username == "thang"|| $username == "hung" && $password = "123456"){
         $_SESSION['username'] = $username;
         session_start();
+        $sess_name = session_name();
         if (session_start()) {
             setcookie($sess_name, session_id(), null, '/', null, null, true);
         }
-        header("location: index.php");
+            header("location: index.php");
     }else{
         flash_message('error', "Wrong Username or Password");
     }
