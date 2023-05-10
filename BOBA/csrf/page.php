@@ -11,7 +11,7 @@
                 <form class="form-autosubmit" action="submit.php" method="post" id="auto-submit-form">
                     <div class="mb-3">
                         <label for="comment" class="form-label">Bình luận</label>
-                        <input class="form-control" id="comment" name="comment" value='<a href="http://localhost/BOBA/csrf/page.php">click me</a>'>
+                        <input class="form-control" id="comment" name="comment" value="bạn đã bị tấn công csrf">
                     </div>
                 </form>
             </div>
