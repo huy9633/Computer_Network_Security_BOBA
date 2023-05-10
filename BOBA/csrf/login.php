@@ -1,27 +1,40 @@
 <?php
 require_once '../helper.php';
-$username = "";
-$password = "";
-$error = "";
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = test_input($_POST["username"]);
-    $password = test_input($_POST["password"]);
-    if ($username == "admin" && $password == "12345") {
-        // Đăng nhập thành công, chuyển hướng sang trang khác
-        header("Location: index.php");
-        exit();
-    } else {
-        $error = "Tên đăng nhập hoặc mật khẩu không đúng!";
-    }
-}
+include_once 'dbConnection.php';
 function test_input($data)
 {
     $data = trim($data);
     $data = stripslashes($data);
-    $data = htmlspecialchars($data);
+    $data = addslashes($data);
+//    $data = htmlspecialchars($data);
     return $data;
 }
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+//    $password=md5($password);
+//    $result = mysqli_query($con,"SELECT username FROM user WHERE username = '$username' and password = '$password'");
+//    $count=mysqli_num_rows($result);
+    if($username == "thinh" || $username == "huy"|| $username == "my" || $username == "thang"|| $username == "hung" && $password = "123456"){
+        $_SESSION['username'] = $username;
+        session_start();
+        header("location: index.php");
+    }else{
+        flash_message('error', "Wrong Username or Password");
+    }
+//    if($count == 1) {
+//        while ($row = mysqli_fetch_array($result)) {
+//            $username = $row['username'];
+//            $avt = $row['avt'];
+//        }
+//        $_SESSION['username'] = $username;
+//        $_SESSION['avt'] = $avt;
+//        session_start();
+//        header("location: index.php");
+//    }else{
+//        flash_message('error', "Wrong Username or Password");
+//    }
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -73,9 +86,6 @@ function test_input($data)
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/BOBA/csrf">Form</a></li>
                                 <li><a class="dropdown-item" href="/BOBA/csrf/login.php">Login Form</a></li>
-                                <li><a class="dropdown-item" href="/BOBA/csrf/commentlist.php">Comment List Form</a>
-                                </li>
-                                <li><a class="dropdown-item" href="/BOBA/csrf/page.php">Auto Submit Form</a></li>
                             </ul>
                         </li>
                         <li class="nav-item active">
@@ -91,25 +101,29 @@ function test_input($data)
         <div class="row justify-content-center mt-5">
             <div class="bd-example col-lg-6" style="margin:auto">
                 <h3 class="text-center mb-3 h4 font-weight-bold text-theme">Đăng nhập</h3>
+                <?php if (has_flash_message('msg')): ?>
+                    <div class="alert alert-success" role="alert">
+                        <?= flash_message('msg') ?>
+                    </div>
+                <?php endif ?>
+                <?php if (has_flash_message('error')): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?= flash_message('error') ?>
+                    </div>
+                <?php endif ?>
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <div class="mb-3">
                         <label for="username" class="form-label">Tên đăng nhập</label>
-                        <input type="text" class="form-control" id="username" name="username"
-                            value="<?php echo $username; ?>" required>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Mật khẩu</label>
                         <input type="password" class="form-control" id="password" name="password" required>
                     </div>
                     <div class="d-grid gap-2 col-9 mx-auto">
-                        <button type="submit" class="btn btn-primary ">Đăng nhập</button>
+                        <button type="submit" class="btn btn-primary ">Tiếp Tục</button>
                     </div>
                 </form>
-                <?php if ($error != "") { ?>
-                    <div class="alert alert-danger mt-3">
-                        <?php echo $error; ?>
-                    </div>
-                <?php } ?>
             </div>
         </div>
     </div>
