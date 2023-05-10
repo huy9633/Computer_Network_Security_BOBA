@@ -11,6 +11,7 @@ function test_input($data)
 }
 if(isset($_SESSiON[username])){
     header("location: index.php");
+}
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = test_input($_POST['username']);
     $password = test_input($_POST['password']);
