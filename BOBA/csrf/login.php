@@ -1,6 +1,6 @@
 <?php
 require_once '../helper.php';
-include_once 'dbConnection.php';
+//include_once 'dbConnection.php';
 function test_input($data)
 {
     $data = trim($data);
