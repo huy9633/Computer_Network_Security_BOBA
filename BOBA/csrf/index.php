@@ -1,7 +1,12 @@
 <?php
 
 require_once '../helper.php';
-
+if(!isset($_SESSION['username'])){
+    header("Location: login.php");
+}
+if (empty($_SESSION['data'])) {
+    $_SESSION['data'] = [];
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,9 +56,7 @@ require_once '../helper.php';
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/BOBA/csrf">Form</a></li>
                                 <li><a class="dropdown-item" href="/BOBA/csrf/login.php">Login Form</a></li>
-                                <li><a class="dropdown-item" href="/BOBA/csrf/commentlist.php">Comment List Form</a>
                                 </li>
-                                <li><a class="dropdown-item" href="/BOBA/csrf/page.php">Auto Submit Form</a></li>
                             </ul>
                         </li>
                         <li class="nav-item active">
@@ -64,27 +67,60 @@ require_once '../helper.php';
             </div>
         </nav>
     </header>
-    <div class="container w-25 pb-3">
-        <h1 class="text-center">Demo Form</h1>
-        <?php if (has_flash_message('msg')) : ?>
-            <div class="alert alert-success" role="alert">
-                <?= flash_message('msg') ?>
+    <div class="container ">
+<!--        <h1 class="text-center">Demo Form</h1>-->
+
+
+        <div class="container w-75 pb-3">
+            <h2 class=" text-center mb-4">Danh sách bình luận</h2>
+            <div class="bd-example col-12" style="margin:auto">
+                <?php
+
+                // Hiển thị danh sách bình luận
+                echo '<div class="container">';
+                echo '<h2>Bình luận</h2>';
+                ?>
+                <li class="list-group-item">
+                    <div class="media">
+                        <div class="media-body">
+                        <span class="mt-0" style="font-weight: bold">CSRF </span>
+                            <a href="page.php">click me</a>
+                        </div>
+                    </div>
+                </li>
+
+                <?php foreach ($_SESSION['data'] as $data): ?>
+                <li class="list-group-item">
+                <?= '<div class="media">' ?>
+                <?= '<div class="media-body">' ?>
+                <?= '<span class="mt-0" style="font-weight: bold">' . $data['username']  . '</span>' . ": ". $data['content']?>
+                <?= '</div>' ?>
+                <?= '</div>' ?>
+                </li>
+                <?php endforeach ?>
+                <hr>
+                <h3>Thêm bình luận mới</h3>
+                <?php if (has_flash_message('msg')) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <?= flash_message('msg') ?>
+                    </div>
+                <?php endif ?>
+                <?php if (has_flash_message('error')) : ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?= flash_message('error') ?>
+                    </div>
+                <?php endif ?>
+                <form action="<?= base_url('csrf/submit.php') ?>" method="POST">
+                    <?= csrf_security()->generateInput() ?>
+                    <div class="form-group mb-3">
+                        <label for="comment">Bình luận:</label>
+                        <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Gửi bình luận</button>
+                    <a href="<?= base_url('csrf/delete.php') ?>" class="btn btn-danger">Delete All</a>
+                    <a href="<?= base_url('csrf/logout.php') ?>" class="btn btn-danger">Logout</a>
+                </form>
             </div>
-        <?php endif ?>
-        <?php if (has_flash_message('error')) : ?>
-            <div class="alert alert-danger" role="alert">
-                <?= flash_message('error') ?>
-            </div>
-        <?php endif ?>
-        <div class="bd-example" style="margin:auto">
-            <form action="<?= base_url('csrf/submit.php') ?>" method="POST">
-                <?= csrf_security()->generateInput() ?>
-                <div class="mb-3">
-                    <label for="exampleInputUsername" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="exampleInputUsername" name="username" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
         </div>
     </div>
     <footer class="border-top footer text-muted">
