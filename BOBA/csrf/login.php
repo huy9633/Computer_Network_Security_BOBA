@@ -9,7 +9,7 @@ function test_input($data)
 //    $data = htmlspecialchars($data);
     return $data;
 }
-if(isset($_SESSiON[username])){
+if(isset($_SESSiON['username'])){
     header("location: index.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
