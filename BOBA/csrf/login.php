@@ -18,6 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if($username == "thinh" || $username == "huy"|| $username == "my" || $username == "thang"|| $username == "hung" && $password = "123456"){
         $_SESSION['username'] = $username;
         session_start();
+        if (session_start()) {
+            setcookie($sess_name, session_id(), null, '/', null, null, true);
+        }
         header("location: index.php");
     }else{
         flash_message('error', "Wrong Username or Password");
