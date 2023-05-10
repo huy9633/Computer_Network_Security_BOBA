@@ -4,9 +4,9 @@ require_once '../helper.php';
 
 try {
     csrf_security()->validate();
-    
-    $email = $_POST['username'];
-    flash_message('msg', "Success submit! Hello $email");
+    $data['content'] = $_POST['comment'];
+    $data['username'] = $_SESSION['username'];
+    $_SESSION['data'][] = $data;
 } catch (Exception $e) {
     flash_message('error', $e->getMessage());
 }
